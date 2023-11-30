@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Buku\BukuController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Mahasiswa\MahasiswaController;
+use App\Http\Controllers\Peminjaman\PeminjamanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+
+// Peminjaman Buku
+Route::get('/peminjaman', [PeminjamanController::class, 'index']);
+Route::get('/peminjaman/keranjang', [PeminjamanController::class, 'indexKeranjang']);
+
+// Mahasiswa
+Route::post('/mahasiswa/detail', [MahasiswaController::class, 'detailMahasiswa']);
+
+// Buku
+Route::get('/buku/detail', [BukuController::class, 'getDetailBuku']);
