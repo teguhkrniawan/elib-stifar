@@ -65,8 +65,6 @@ Aplikasi ini merujuk pada aplikasi serupa slims.web.id, dimana sebuah content ma
 Open Public Access Library dimana merupakah salah satu teknologi yang digunakan oleh Politeknik Caltex Riau. Bisnis proses pada aplikasi ini mengambil dari Digital Library Universitas Negeri Medan dan Universitas Gadjah Mada sebagai referensi dalam menerapkan
 Digital Library. 
 
-![screenshoot](./screenshoots/self-loan.png)
-
 Aplikasi ini memiliki fitur utama dalam memberikan layanan self service kepada pengguna. Yaitu dalam peminjaman buku, pengembalian buku, dan pembayaran denda otomatis terintegasi dengan payment gateway.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
