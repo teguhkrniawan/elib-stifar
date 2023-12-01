@@ -37,7 +37,6 @@ class MahasiswaController extends Controller
                 'DATA' => $mahasiswa
             ]);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             return response()->json([
                 'MSG' => 'Something went wrong',
                 'TYPE' => 'E'

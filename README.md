@@ -34,10 +34,12 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a> -->
 
-  <h3 align="center">DIGITAL LIBRARY STIPAR</h3>
+  <h3 align="center">DIGITAL LIBRARY STIFAR</h3>
 
   <p align="center">
-    Project about digital library, how to make simple flow book loan
+    Merupakan sebuah project pribadi dalam membangun portofolio, project ini bukan merupakan
+    project yang nyata digunakan oleh instansi terkait. Penggunaan logo dan nama instansi
+    hanya untuk sebagai assets design dalam pengembangan sistem.
     <!-- <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
@@ -59,7 +61,13 @@
 
 ![screenshoot](./screenshoots/homepage.png)
 
-This application takes references from open source applications such as slims.web.id as a content management system in the popular Open Public Access Library where one of the users is the Caltex Riau Polytechnic. The business processes in this application are taken from references at Medan State University and Gajah Mada University
+Aplikasi ini merujuk pada aplikasi serupa slims.web.id, dimana sebuah content management system yang populer untuk mengelola
+Open Public Access Library dimana merupakah salah satu teknologi yang digunakan oleh Politeknik Caltex Riau. Bisnis proses pada aplikasi ini mengambil dari Digital Library Universitas Negeri Medan dan Universitas Gadjah Mada sebagai referensi dalam menerapkan
+Digital Library. 
+
+![screenshoot](./screenshoots/homepage.png)
+
+Aplikasi ini memiliki fitur utama dalam memberikan layanan self service kepada pengguna. Yaitu dalam peminjaman buku, pengembalian buku, dan pembayaran denda otomatis terintegasi dengan payment gateway.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -80,18 +88,20 @@ My tech stack to build this application.
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Lakukan cloning dari repository ini.
+2. Lakukan import database yang telah ada pada sumber kode ini
+2. Install Depedencies Composer
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   composer install
    ```
-3. Install NPM packages
+3. Install Depedencies NPM 
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+4. Jalankan aplikasi
+   ```sh
+   php artisan serve
+   npm run dev
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -102,35 +112,6 @@ _Below is an example of how you can instruct your audience on installing and set
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

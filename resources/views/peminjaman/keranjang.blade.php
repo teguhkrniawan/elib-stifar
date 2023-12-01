@@ -57,6 +57,8 @@
                 <div class="col-span-8 bg-white shadow">
                     <div class="p-5">
                         <form id="formLoan">
+                            @csrf
+                            <input type="hidden" name="idMhs" value="{{ $mhs->id }}">
                             <div class="flex justify-between mb-3 px-3">
                                 <h3 class="font-bold">DAFTAR BUKU <span id="jlh-buku"></span></h3>
                                 <input id="noPanggil" type="text"
@@ -72,7 +74,7 @@
                             </div>
     
                             <div class="flex justify-center hidden" id="container-btn">
-                                <button type="submit"
+                                <button type="submit" id="btn-pinjam"
                                     class="text-center w-[30%] py-3 text-white rounded-full font-bold mt-5 bg-emerald-800">PINJAM
                                     BUKU</button>
                             </div>
@@ -110,4 +112,5 @@
     </script>
     @include('peminjaman.actionSearchBuku')
     @include('peminjaman.deleteCart')
+    @include('peminjaman.actionLoan')
 @endpush

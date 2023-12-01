@@ -24,8 +24,18 @@
                     if (newData) {
                         const isExists = cartStorage.some(item => item.id == newData.id)
                         if (!isExists) {
-                            cartStorage.push(newData)
-                            localStorage.setItem('cartBook', JSON.stringify(cartStorage))
+                            if (newData.stok > 0) {
+                                cartStorage.push(newData)
+                                localStorage.setItem('cartBook', JSON.stringify(cartStorage))
+                            }
+
+                            if (newData.stok == 0) {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "Stok Habis",
+                                    text: `Buku dengan kode panggil ${this.value} tidak memiliki stok di data kami`,
+                                });
+                            }
                         }
                         if (isExists) {
                             Swal.fire({
