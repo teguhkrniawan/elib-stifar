@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Mahasiswa extends Model
 {
@@ -23,4 +24,16 @@ class Mahasiswa extends Model
     protected $casts = [
         'id' => 'string',
     ];
+
+    public static function cekAksesPeminjaman($nim){
+        $response = [];
+
+        $query = "SELECT id, status_peminjaman FROM tbl_peminjaman a WHERE a.nim = '$nim' AND (status_peminjaman = 'DENDA' OR status_peminjaman = 'PINJAM') ORDER BY id DESC LIMIT 1";
+        $data  = DB::select($query);
+        if(COUNT($data) > 0){
+            $response = $data;
+        }
+
+        return $response;
+    }
 }

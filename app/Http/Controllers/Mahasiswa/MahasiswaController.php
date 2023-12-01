@@ -23,6 +23,27 @@ class MahasiswaController extends Controller
             // cari informasi mahasiswa by NIM
             $mahasiswa = Mahasiswa::where('nim', $request->nim)->first();
 
+            // cek apakah mahasiswa bisa meminjam buku
+            $cekStatusPeminjaman = Mahasiswa::cekAksesPeminjaman($request->nim);
+            if(COUNT($cekStatusPeminjaman) > 0){
+                $statusPeminjamana = $cekStatusPeminjaman[0]->status_peminjaman;
+                if($statusPeminjamana == 'DENDA'){
+                    $msg = "Akses ditangguhkan, kami mendeteksi bahwa kamu memiliki tagihan denda atas buku yang dipinjam !";
+                    return response()->json([
+                        'MSG' => $msg ? $msg : '',
+                        'TYPE' => 'E'
+                    ], 400);
+                }
+
+                if($statusPeminjamana == 'PINJAM'){
+                    $msg = "Maaf, kamu sedang dalam masa peminjaman buku, silahkan kembalikan terlebih dahulu buku yang dipinjam !";
+                    return response()->json([
+                        'MSG' => $msg ? $msg : '',
+                        'TYPE' => 'E'
+                    ], 400);
+                }
+            }
+
             // apabila tidak null
             if ($mahasiswa) {
                 // hash id mahasiswa agar tidak mudah dibaca
@@ -30,7 +51,7 @@ class MahasiswaController extends Controller
                 $enskripsi_id = $sqids->encode([$mahasiswa->id]);
                 $mahasiswa->id = strval($enskripsi_id);
             }
-            
+
             return response()->json([
                 'MSG' => "Sukses",
                 'TYPE' => "S",
