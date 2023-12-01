@@ -40,8 +40,14 @@
                         Swal.fire({
                             icon: "success",
                             title: "Berhasil Melakukan Peminjaman",
-                            text: `Klik OK untuk mencetak bukti transaksi ini`,
-                        });
+                            text: `klik cetak untuk mencetak bukti transaksi ini`,
+                            confirmButtonText: "Cetak",
+                            allowOutsideClick: false
+                        }).then( result => {
+                            if(result.isConfirmed){
+                                window.location.href = '/peminjaman/cetak'
+                            }
+                        })
                     })
                     .error(err => {
                         $('#btn-pinjam').text('PINJAM BUKU')

@@ -12,12 +12,14 @@
         {{-- VEGAS SCREEN --}}
         <div class="background-menu h-screen items-center flex justify-center">
             <div class="flex gap-[7vw] py-auto flex-col md:flex-row">
-                <div class="box1 p-[50px] text-center rounded bg-cyan-600 border border-gray-200 border-2 cursor-pointer">
-                    <a href="{{ url('/peminjaman') }}">
+                <a href="{{ url('/peminjaman') }}">
+                    <div
+                        class="box1 p-[50px] text-center rounded bg-cyan-600 border border-gray-200 border-2 cursor-pointer">
                         <i class="fa-solid fa-book text-[30px] text-white pb-3"></i>
                         <p class="text-white font-bold">PEMINJAMAN <br> MANDIRI</p>
-                    </a>
-                </div>
+                    </div>
+                </a>
+
 
                 <div class="box1 p-[50px] text-center rounded bg-yellow-500 border border-gray-200 border-2 cursor-pointer">
                     <i class="fa-solid fa-clock text-[30px] text-white pb-3"></i>
@@ -34,7 +36,7 @@
 
         {{-- Footer --}}
         @include('includes.footer', [
-            'bgColor' => ''
+            'bgColor' => '',
         ])
     </div>
 @endsection

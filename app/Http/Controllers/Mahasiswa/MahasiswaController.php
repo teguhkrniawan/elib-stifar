@@ -36,7 +36,7 @@ class MahasiswaController extends Controller
                 }
 
                 if($statusPeminjamana == 'PINJAM'){
-                    $msg = "Maaf, kamu sedang dalam masa peminjaman buku, silahkan kembalikan terlebih dahulu buku yang dipinjam !";
+                    $msg = "Maaf tidak dapat melanjutkan peminjaman, silahkan kembalikan terlebih dahulu buku yang dipinjam !";
                     return response()->json([
                         'MSG' => $msg ? $msg : '',
                         'TYPE' => 'E'

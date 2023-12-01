@@ -150,4 +150,9 @@ class PeminjamanController extends Controller
             ], 400);
         }
     }
+
+    // fungsi untuk melakukan cetak struk / resi
+    public function cetakResi(Request $request){
+        return view('peminjaman.cetak');
+    }
 }

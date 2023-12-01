@@ -86,7 +86,7 @@ My tech stack to build this application.
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Lakukan cloning dari repository ini.
+1. Lakukan clone dari repository ini.
 2. Lakukan import database yang telah ada pada sumber kode ini
 2. Install Depedencies Composer
    ```sh
@@ -100,6 +100,10 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    php artisan serve
    npm run dev
+   ```
+5. Jalankan perintah dibawah ini apabila terdapat error
+   ```sh
+   composer dump-autoload
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

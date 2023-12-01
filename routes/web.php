@@ -23,6 +23,7 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/peminjaman', [PeminjamanController::class, 'index']);
 Route::get('/peminjaman/keranjang', [PeminjamanController::class, 'indexKeranjang']);
 Route::post('/peminjaman/insert', [PeminjamanController::class, 'insertPeminjaman']);
+Route::get('/peminjaman/cetak', [PeminjamanController::class, 'cetakResi']);
 
 // Mahasiswa
 Route::post('/mahasiswa/detail', [MahasiswaController::class, 'detailMahasiswa']);
