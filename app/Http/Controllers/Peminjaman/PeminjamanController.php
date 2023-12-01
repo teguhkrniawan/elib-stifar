@@ -106,6 +106,7 @@ class PeminjamanController extends Controller
          */
         DB::beginTransaction();
         try {
+            // simpan ke tabel peminjaman
             $insertGetId = DB::table('tbl_peminjaman')
                 ->insertGetId([
                     'nim' => $mhs_nim,
@@ -114,6 +115,23 @@ class PeminjamanController extends Controller
                     'tanggal_pengembalian' => date('Y-m-d'),
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
+            foreach ($arrIdBuku as $key => $idBuku) {
+
+                // simpan ke detail peminjaman
+                DB::table('tbl_detail_peminjaman')
+                    ->insert([
+                        'nim' => $mhs_nim,
+                        'id_buku' => $sqids->decode($idBuku)[0],
+                        'jumlah' => 1
+                    ]);
+
+                // update stok buku
+                DB::table('tbl_buku')
+                        ->where('id', $sqids->decode($idBuku)[0])
+                        ->update([
+                            'stok' => DB::raw('stok - 1')
+                        ]);
+            }
             DB::commit();   
 
             // setelah berhasil di commit barulah beri response

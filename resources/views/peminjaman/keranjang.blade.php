@@ -62,7 +62,7 @@
                             <div class="flex justify-between mb-3 px-3">
                                 <h3 class="font-bold">DAFTAR BUKU <span id="jlh-buku"></span></h3>
                                 <input id="noPanggil" type="text"
-                                    class="border px-3 focus:border-gray-100 focus:outline-none" placeholder="No Panggil">
+                                    class="border px-3 focus:border-gray-100 focus:outline-none" placeholder="Enter / Scanner">
                             </div>
     
                             <div class="container-cart overflow-y-scroll h-[250px]">
