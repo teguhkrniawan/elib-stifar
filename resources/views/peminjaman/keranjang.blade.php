@@ -48,8 +48,7 @@
                             </table>
                         </div>
 
-                        <marquee class="uppercase pt-5">Buku yang dipinjam hari ini, harap dikembalikan Tanggal <b>07 Des
-                                2023</b></marquee>
+                        <marquee class="uppercase pt-5">Buku yang dipinjam hari ini, harap dikembalikan sebelum Tanggal <b>{{ $tgl_tempo }}</b></marquee>
                     </div>
                 </div>
 

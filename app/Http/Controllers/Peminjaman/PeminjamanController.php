@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Peminjaman;
 
+use App\Helpers\DataHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Buku;
 use App\Models\Mahasiswa;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +14,7 @@ use Sqids\Sqids;
 
 class PeminjamanController extends Controller
 {
-    // return view halaman peminjaman
+    // return view halaman peminjaman, saat input mahasiswa duluan
     public function index()
     {
         return view('peminjaman.index');
@@ -27,12 +29,17 @@ class PeminjamanController extends Controller
         $sqids  = new Sqids(env('UNIQUE_KEY'), 20);
         $mhs_id = $sqids->decode($mhs_id);
 
+        $today    = date('Y-m-d');
+        $nextWeek = DataHelper::nextWeek($today);
+        $newtWeekString = DataHelper::convertTanggal($nextWeek); 
+
         // coba ambil data mahasiswa
         $mhs = Mahasiswa::where('id', $mhs_id)->first();
         if ($mhs != null) {
             $mhs->id = $sqids->encode([$mhs->id]);
             return view('peminjaman.keranjang', [
-                'mhs' => $mhs
+                'mhs' => $mhs,
+                'tgl_tempo' => $newtWeekString
             ]);
         }
 
@@ -107,12 +114,16 @@ class PeminjamanController extends Controller
         DB::beginTransaction();
         try {
             // simpan ke tabel peminjaman
+
+            $today    = date('Y-m-d');
+            $nextWeek = DataHelper::nextWeek($today);
+
             $insertGetId = DB::table('tbl_peminjaman')
                 ->insertGetId([
                     'nim' => $mhs_nim,
                     'nama_mahasiswa' => $mhs_nama,
                     'jumlah_buku'    => COUNT($arrIdBuku),
-                    'tanggal_pengembalian' => date('Y-m-d'),
+                    'tanggal_jatuh_tempo' => $nextWeek,
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
             foreach ($arrIdBuku as $key => $idBuku) {
@@ -121,6 +132,7 @@ class PeminjamanController extends Controller
                 DB::table('tbl_detail_peminjaman')
                     ->insert([
                         'nim' => $mhs_nim,
+                        'id_peminjaman' => $insertGetId,
                         'id_buku' => $sqids->decode($idBuku)[0],
                         'jumlah' => 1
                     ]);
@@ -134,12 +146,14 @@ class PeminjamanController extends Controller
             }
             DB::commit();   
 
+            $idPeminjaman = $sqids->encode([$insertGetId]);
+
             // setelah berhasil di commit barulah beri response
             return response()->json([
                 'MSG' => "Sukses",
                 'TYPE' => "S",
                 'DATA' => [
-                    'idPeminjaman' => $insertGetId
+                    'idPeminjaman' => $idPeminjaman
                 ]
             ]);
         } catch (\Throwable $th) {
@@ -153,6 +167,22 @@ class PeminjamanController extends Controller
 
     // fungsi untuk melakukan cetak struk / resi
     public function cetakResi(Request $request){
-        return view('peminjaman.cetak');
+
+        $sqids = new Sqids(env('UNIQUE_KEY'), 20);
+        $idPeminjaman = $request->query('p');
+        $idPeminjaman = $sqids->decode($idPeminjaman);
+        if(!$idPeminjaman){
+            return '<p>Error !!</p>';
+        }
+
+        // cek didatabase berdasarkan database peminjaman
+        $list_buku = Buku::listPinjamanById($idPeminjaman[0]);
+        $master_peminjaman = Peminjaman::where('id', $idPeminjaman)->first();
+
+
+        return view('peminjaman.cetak', [
+            'list_buku' => $list_buku,
+            'master_peminjaman' => $master_peminjaman
+        ]);
     }
 }

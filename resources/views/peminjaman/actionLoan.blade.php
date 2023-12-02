@@ -45,7 +45,8 @@
                             allowOutsideClick: false
                         }).then( result => {
                             if(result.isConfirmed){
-                                window.location.href = '/peminjaman/cetak'
+                                const idPeminjaman = res.DATA.idPeminjaman
+                                window.location.href = '/peminjaman/cetak?p='+idPeminjaman
                             }
                         })
                     })

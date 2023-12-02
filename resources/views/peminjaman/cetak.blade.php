@@ -18,16 +18,25 @@
                 <p>-- PEMINJAMAN --</p>
             </div>
 
-            <p class="text-xs mt-5">12/12/2023 - 18:09</p>
-            <p class="text-xs">NIM : 92830821</p>
-            <div class="flex justify-between text-xs mt-[30px] border-b border-dashed pb-3 border-black">
-                <p class="text-xs me-5 ">Judul buku yang sangat bagus untuk dkembangkan oleh pemula</p>
-                <p class="text-xs">x1</p>
+            <p class="text-xs mt-5">Dibuat: {{ date( 'd/m/Y H:i' ,strtotime($master_peminjaman->created_at)) }}</p>
+            <p class="text-xs">Jatuh tempo: {{ date( 'd/m/Y' ,strtotime($master_peminjaman->tanggal_jatuh_tempo)) }}</p>
+            <p class="text-xs">NIM : {{ $master_peminjaman->nim }}</p>
+
+            <div class="flex justify-between text-xs mt-[30px] border-b pb-3 border-black">
+                <p class="text-xs me-5 ">Items</p>
+                <p class="text-xs">Qty</p>
             </div>
+
+            @foreach ($list_buku as $item)
+                <div class="flex justify-between text-xs mt-[30px] border-b border-dashed pb-3 border-black">
+                    <p class="text-xs me-5 ">{{ $item->judul_buku }} ({{ $item->kode_panggil }})</p>
+                    <p class="text-xs">x1</p>
+                </div>
+            @endforeach
 
 
             <div class="text-center text-xs mt-[30px] pb-5">
-                <p>Terimaksih telah menggunakan Digital Library</p>
+                <p>Terimakasih telah menggunakan Digital Library</p>
                 <p>simpan resi ini, dan tunjukkan ke petugas sebagai bukti peminjaman buku</p>
             </div>
         </div>
@@ -37,10 +46,10 @@
     <script>
         $(document).ready(function() {
             var printOptions = {
-                silent: true, // Suppress the print dialog
-                printBackground: true, // Include background graphics and colors
-                deviceWidth: "8.5in", // Set the width of the printed page
-                deviceHeight: "11in" // Set the height of the printed page
+                silent: true, 
+                printBackground: true, 
+                deviceWidth: "8.5in", 
+                deviceHeight: "11in"
             };
 
             // Call the print function with options
