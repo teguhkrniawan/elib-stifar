@@ -25,6 +25,9 @@ class Mahasiswa extends Model
         'id' => 'string',
     ];
 
+    /**
+     * untuk melihat apakah mahasiswa pe
+     */
     public static function cekAksesPeminjaman($nim){
         $response = [];
 
@@ -36,4 +39,17 @@ class Mahasiswa extends Model
 
         return $response;
     }
+
+    public static function cekStatusDenda($nim){
+        $response = [];
+
+        $query = "SELECT id, status_peminjaman FROM tbl_peminjaman a WHERE a.nim = '$nim' AND status_peminjaman = 'DENDA'  ORDER BY id DESC LIMIT 1";
+        $data  = DB::select($query);
+        if(COUNT($data) > 0){
+            $response = $data;
+        }
+
+        return $response;
+    }
+    
 }

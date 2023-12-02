@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Buku\BukuController;
+use App\Http\Controllers\Denda\DendaController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Mahasiswa\MahasiswaController;
 use App\Http\Controllers\Peminjaman\PeminjamanController;
@@ -30,3 +31,8 @@ Route::post('/mahasiswa/detail', [MahasiswaController::class, 'detailMahasiswa']
 
 // Buku
 Route::get('/buku/detail', [BukuController::class, 'getDetailBuku']);
+
+// Denda 
+Route::get('/denda', [DendaController::class, 'index']);
+Route::post('/denda/cekmhs', [DendaController::class, 'cekDenda']);
+Route::get('/denda/pay', [DendaController::class, 'indexPay']);
