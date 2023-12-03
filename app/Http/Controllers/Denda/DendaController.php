@@ -8,6 +8,7 @@ use App\Models\DetailPeminjaman;
 use App\Models\Mahasiswa;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Sqids\Sqids;
 
 class DendaController extends Controller
@@ -83,26 +84,52 @@ class DendaController extends Controller
             \Midtrans\Config::$isSanitized  = true;
             \Midtrans\Config::$is3ds        = true;
 
-            // params
-            $params = array(
-                'transaction_details' => array(
-                    'order_id'      => $idPeminjaman,
-                    'gross_amount'  => $data->denda,
-                ),
-                'customer_details'  => array(
-                    'name' => $mhs->nama_mahasiswa,
-                    'phone'=> '6282188900921'
-                )
-            );
+            try {
+                $status = \Midtrans\Transaction::status($idPeminjaman);
+                if($status->transaction_status == 'pending'){
+                    return view('denda.detailDenda', [
+                        'data' => $status
+                    ]);
+                }
+    
+                if($status->transaction_status == 'settlement'){
 
-            $snapToken = \Midtrans\Snap::getSnapToken($params);
+                    $status->gross_amount =  number_format($status->gross_amount, 0, ',', '.');
+                    $status->settlement_time =  date('d-M-Y H:i', strtotime( $status->settlement_time));
 
-            return view('denda.pay', [
-                'peminjaman' => $data,
-                'mhs'        => $mhs,
-                'detail_buku' => $arrBuku_P,
-                'token'       => $snapToken  
-            ]);
+                    $list_buku = Buku::listPinjamanById($idPeminjaman);
+
+                    return view('denda.cetak', [
+                        'data' => $status,
+                        'mhs'  => $mhs,
+                        'list_buku' => $list_buku
+                    ]);
+                }
+            } catch (\Throwable $th) {
+                // params
+                $params = array(
+                    'transaction_details' => array(
+                        'order_id'      => $idPeminjaman,
+                        'gross_amount'  => $data->denda,
+                    ),
+                    'customer_details'  => array(
+                        'name' => $mhs->nama_mahasiswa,
+                        'phone'=> '6282188900921'
+                    )
+                );
+    
+                $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+                return view('denda.pay', [
+                    'peminjaman' => $data,
+                    'mhs'        => $mhs,
+                    'detail_buku' => $arrBuku_P,
+                    'token'       => $snapToken  
+                ]);
+            }
+
+
+            
         }
 
         return redirect('/');
@@ -110,6 +137,17 @@ class DendaController extends Controller
 
     // fungsi setelah pengguna melakukan pembayaran
     public function afterPay(Request $request){
-        dd($request);
+        $idPeminjaman = $request->order_id;
+        // update
+        DB::table('tbl_peminjaman')
+                ->where('id', $idPeminjaman)
+                ->update([
+                    'status_peminjaman' => 'LUNAS'
+                ]);
+    }
+
+    // fungsi cetak
+    public function cetak(Request $request){
+        return view('denda.cetak');
     }
 }

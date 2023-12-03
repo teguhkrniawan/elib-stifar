@@ -36,4 +36,4 @@ Route::get('/buku/detail', [BukuController::class, 'getDetailBuku']);
 Route::get('/denda', [DendaController::class, 'index']);
 Route::post('/denda/cekmhs', [DendaController::class, 'cekDenda']);
 Route::get('/denda/pay', [DendaController::class, 'indexPay']);
-Route::post('/denda/afterpay', [DendaController::class, 'afterPay']);
+Route::get('/denda/cetak', [DendaController::class, 'cetak']);

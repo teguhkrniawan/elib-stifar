@@ -97,22 +97,20 @@
         // aksi mengeluarkan dialog midtrans
         $('#formDenda').on('submit', function(e) {
             e.preventDefault();
-            $('.background-menu').addClass('hidden')
-            snap.pay('10c98fb9-5b16-4ea1-aa64-cfae5a92ca5e', {
+            // $('.background-menu').addClass('hidden')
+            snap.pay('{{ $token }}', {
                 // Optional
                 onSuccess: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    location.reload()
                 },
                 // Optional
                 onPending: function(result) {
                     /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    location.reload()
                 },
                 // Optional
                 onError: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    alert('on error')
                 }
             })
         })
