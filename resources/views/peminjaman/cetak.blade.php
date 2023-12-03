@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             var printOptions = {
