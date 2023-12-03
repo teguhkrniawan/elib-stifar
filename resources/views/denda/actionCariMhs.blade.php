@@ -30,10 +30,10 @@
                     if(type == 'W'){
                         $('.pesan-error').text(res.MSG)
                     }
-                    console.log(type)
                     // apabila response data ada
                     if (type == 'S') {
-                        window.location.href = '/denda/pay'
+                        console.log(data)
+                        window.location.href = '/denda/pay?p='+res.DATA.idPeminjaman
                     }
 
 

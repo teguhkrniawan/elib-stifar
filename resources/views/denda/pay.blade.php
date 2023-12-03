@@ -6,8 +6,11 @@
         {{-- NAVBAR --}}
         @include('includes.nav')
 
+        <div id="snap-container" class="p-[30px] flex justify-center"></div>
+
         {{-- VEGAS SCREEN --}}
         <div class="background-menu">
+
             {{-- Breadcubs --}}
             <div class="flex w-full px-[50px] py-5 bg-opacity-30 ">
                 <a href="{{ url('/') }}">
@@ -18,7 +21,7 @@
             </div>
 
             <div class="flex justify-center bg-opacity-30 mb-[100px]">
-                <form action="">
+                <form id="formDenda">
                     <div class="gap-[20px] p-5 rounded-md border border-black bg-white flex flex-col" style="width: 500px">
 
                         <div class="flex text-center flex-col">
@@ -32,38 +35,34 @@
                                     <tr class="">
                                         <td class=" px-2 font-bold">NAMA</td>
                                         <td class=" text-center font-bold">:</td>
-                                        <td class="px-2 font-bold uppercase">TEGUH KURNIAWAN</td>
+                                        <td class="px-2 font-bold uppercase">{{ $mhs->nama_mahasiswa }}</td>
                                     </tr>
                                     <tr class="">
                                         <td class=" px-2 font-bold">NIM</td>
                                         <td class=" text-center font-bold">:</td>
-                                        <td class="px-2 font-bold">1572736</td>
+                                        <td class="px-2 font-bold">{{ $peminjaman->nim }}</td>
                                     </tr>
                                     <tr class="">
                                         <td class=" px-2 font-bold">PRODI</td>
                                         <td class=" text-center font-bold">:</td>
-                                        <td class="px-2 font-bold uppercase">KESEHATAN MASYARAKAT</td>
+                                        <td class="px-2 font-bold uppercase">{{ $mhs->prodi }}</td>
                                     </tr>
                                     <tr class="">
                                         <td class=" px-2 font-bold">DENDA</td>
                                         <td class=" text-center font-bold">:</td>
-                                        <td class="px-2 font-bold text-red-500">Rp 20.000</td>
+                                        <td class="px-2 font-bold text-red-500">Rp
+                                            {{ number_format($peminjaman->denda, 0, ',', '.') }}</td>
                                     </tr>
                                 </tbody>
                             </table>
 
-                            <div class="flex pt-3 justify-between px-4 border-b border-dashed border-black border-md pb-3">
-                                <p class="me-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, voluptatibus.</p>
-                                <p>X1</p>
-                            </div>
-                            <div class="flex pt-3 justify-between px-4 border-b border-dashed border-black border-md pb-3">
-                                <p class="me-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, voluptatibus.</p>
-                                <p>X1</p>
-                            </div>
-                            <div class="flex pt-3 justify-between px-4 border-b border-dashed border-black border-md pb-3">
-                                <p class="me-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, voluptatibus.</p>
-                                <p>X1</p>
-                            </div>
+                            @foreach ($detail_buku as $item)
+                                <div
+                                    class="flex pt-3 justify-between px-4 border-b border-dashed border-black border-md pb-3">
+                                    <p class="me-5">{{ $item['judul_buku'] }}</p>
+                                    <p>X{{ $item['jumlah'] }}</p>
+                                </div>
+                            @endforeach
                         </div>
 
                         <div class="flex justify-center" id="container-btn">
@@ -83,6 +82,7 @@
 @endsection
 
 @push('script')
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"  data-client-key="{{ env('MIDTRANS_CLIENT') }}"></script>
     <script>
         $(document).ready(function(e) {
             // Library Vegas JS
@@ -91,6 +91,29 @@
                     src: '{{ url('images/pcr-lib2.jpg') }}'
                 }],
                 overlay: '{{ url('assets/vegas/overlays/07.png') }}'
+            })
+        })
+
+        // aksi mengeluarkan dialog midtrans
+        $('#formDenda').on('submit', function(e) {
+            e.preventDefault();
+            $('.background-menu').addClass('hidden')
+            snap.pay('10c98fb9-5b16-4ea1-aa64-cfae5a92ca5e', {
+                // Optional
+                onSuccess: function(result) {
+                    /* You may add your own js here, this is just example */
+                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                },
+                // Optional
+                onPending: function(result) {
+                    /* You may add your own js here, this is just example */
+                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                },
+                // Optional
+                onError: function(result) {
+                    /* You may add your own js here, this is just example */
+                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                }
             })
         })
     </script>
