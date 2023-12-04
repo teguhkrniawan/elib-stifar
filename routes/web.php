@@ -37,3 +37,6 @@ Route::get('/denda', [DendaController::class, 'index']);
 Route::post('/denda/cekmhs', [DendaController::class, 'cekDenda']);
 Route::get('/denda/pay', [DendaController::class, 'indexPay']);
 Route::get('/denda/cetak', [DendaController::class, 'cetak']);
+
+// email
+Route::get('/mail-test', [DendaController::class, 'sendMail']);

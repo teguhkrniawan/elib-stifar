@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Denda;
 
 use App\Http\Controllers\Controller;
+use App\Mail\DendaMail;
 use App\Models\Buku;
 use App\Models\DetailPeminjaman;
 use App\Models\Mahasiswa;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Sqids\Sqids;
 
 class DendaController extends Controller
@@ -60,7 +62,7 @@ class DendaController extends Controller
         $idPeminjaman = $request->query('p');
         $sqids = new Sqids(env('UNIQUE_KEY'), 20);
         $idPeminjaman = $sqids->decode($idPeminjaman);
-        if($idPeminjaman){
+        if ($idPeminjaman) {
             $idPeminjaman = $idPeminjaman[0];
             $data = Peminjaman::where('id', $idPeminjaman)->first();
 
@@ -86,16 +88,16 @@ class DendaController extends Controller
 
             try {
                 $status = \Midtrans\Transaction::status($idPeminjaman);
-                if($status->transaction_status == 'pending'){
+                if ($status->transaction_status == 'pending') {
                     return view('denda.detailDenda', [
                         'data' => $status
                     ]);
                 }
-    
-                if($status->transaction_status == 'settlement'){
+
+                if ($status->transaction_status == 'settlement') {
 
                     $status->gross_amount =  number_format($status->gross_amount, 0, ',', '.');
-                    $status->settlement_time =  date('d-M-Y H:i', strtotime( $status->settlement_time));
+                    $status->settlement_time =  date('d-M-Y H:i', strtotime($status->settlement_time));
 
                     $list_buku = Buku::listPinjamanById($idPeminjaman);
 
@@ -114,40 +116,76 @@ class DendaController extends Controller
                     ),
                     'customer_details'  => array(
                         'name' => $mhs->nama_mahasiswa,
-                        'phone'=> '6282188900921'
+                        'phone' => '6282188900921'
                     )
                 );
-    
+
                 $snapToken = \Midtrans\Snap::getSnapToken($params);
 
                 return view('denda.pay', [
                     'peminjaman' => $data,
                     'mhs'        => $mhs,
                     'detail_buku' => $arrBuku_P,
-                    'token'       => $snapToken  
+                    'token'       => $snapToken
                 ]);
             }
-
-
-            
         }
 
         return redirect('/');
     }
 
     // fungsi setelah pengguna melakukan pembayaran
-    public function afterPay(Request $request){
+    public function afterPay(Request $request)
+    {
         $idPeminjaman = $request->order_id;
-        // update
-        DB::table('tbl_peminjaman')
+        $transaction_status = $request->transaction_status;
+
+        if ($transaction_status == 'settlement') {
+            // update
+            DB::table('tbl_peminjaman')
                 ->where('id', $idPeminjaman)
                 ->update([
-                    'status_peminjaman' => 'LUNAS'
+                    'status _peminjaman' => 'LUNAS'
                 ]);
+
+            // send email
+            try {
+
+                $ammount = $request->gross_amount ? $request->gross_amount : 0;
+                $tgl_pembayaran = $request->transaction_time ? $request->transaction_time : date('d M Y H:i');
+
+                // get info detail peminjaman
+                $arrBuku_P = [];
+                $list_buku_dipinjam = DetailPeminjaman::where('id_peminjaman', $idPeminjaman)->get();
+                foreach ($list_buku_dipinjam as $key => $item_detail) {
+                    $buku = Buku::where('id', $item_detail->id_buku)->first();
+                    array_push($arrBuku_P, [
+                        'judul_buku' => $buku->judul_buku,
+                        'jumlah' => $item_detail->jumlah
+                    ]);
+                }
+
+                $data = [
+                    'ammount' => $ammount,
+                    'tgl_pembayaran' => $tgl_pembayaran,
+                    'arrBuku'  => $arrBuku_P
+                ];
+                Mail::to('fikri@pcr.ac.id')->send(new DendaMail($data));
+            } catch (\Throwable $th) {
+                echo 'Failed Send email';
+                return;
+            }
+        }
     }
 
     // fungsi cetak
-    public function cetak(Request $request){
+    public function cetak(Request $request)
+    {
         return view('denda.cetak');
+    }
+
+    // fungsi untuk melakukan pengiriman email
+    public function sendMail(Request $request)
+    {
     }
 }
