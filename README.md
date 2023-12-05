@@ -114,9 +114,9 @@ _Below is an example of how you can instruct your audience on installing and set
 - Surat Bebas Pustaka
 
 ## Akses Peminjaman
-nim : 14720092
-pass : password
-kode buku :
+1. nim : 14720092
+2. pass : password
+3. kode buku :
 - K-00829CC
 - K-00332CC
 - K-03982BB
