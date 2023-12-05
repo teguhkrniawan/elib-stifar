@@ -18,7 +18,7 @@ class DendaMail extends Mailable
      */
 
     protected $data;
-    
+
     public function __construct(array $data)
     {
         $this->data = $data;
@@ -56,7 +56,16 @@ class DendaMail extends Mailable
 
     public function build()
     {
+
+        // Menambahkan header "From" secara manual
+        $this->withSwiftMessage(function ($message) {
+            $message->getHeaders()
+                ->addTextHeader('From', 'STIFAR RIAU <noreply@teguhkrniawan.com>');
+        });
+
         return $this->view('email.denda')
-                    ->with('data', $this->data);
+            ->with('data', $this->data)
+            ->subject('Penalty Receipt - STIFAR RIAU')
+            ->from('noreply@teguhkrniawan.com', 'STIFAR RIAU');
     }
 }

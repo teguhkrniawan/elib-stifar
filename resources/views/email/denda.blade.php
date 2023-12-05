@@ -1,55 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Email</title>
-    @vite('resources/css/app.css')
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+        @media screen {
+            @font-face {
+                font-family: 'Lato';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+            }
+
+            @font-face {
+                font-family: 'Lato';
+                font-style: normal;
+                font-weight: 700;
+                src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v11/qdgUG4U09HnJwhYI-uK18wLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+            }
+
+            @font-face {
+                font-family: 'Lato';
+                font-style: italic;
+                font-weight: 400;
+                src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v11/RYyZNoeFgb0l7W3Vu1aSWOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+            }
+
+            @font-face {
+                font-family: 'Lato';
+                font-style: italic;
+                font-weight: 700;
+                src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v11/HkF_qI1x_noxlxhrhMQYELO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+            }
+        }
+
+        /* CLIENT-SPECIFIC STYLES */
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* RESET STYLES */
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+
+        /* iOS BLUE LINKS */
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* MOBILE STYLES */
+        @media screen and (max-width:600px) {
+            h1 {
+                font-size: 32px !important;
+                line-height: 32px !important;
+            }
+        }
+
+        /* ANDROID CENTER FIX */
+        div[style*="margin: 16px 0;"] {
+            margin: 0 !important;
+        }
+    </style>
 </head>
-<body class="text-gray-200">
-    <div class="flex justify-center items-center w-full bg-gray-200">
-        <div class="flex flex-col bg-white w-[50%] h-screen text-black">
-            <div class="h-32 bg-green-600 flex flex-col items-center rounded-b-lg">
-                <h3 class="font-bold text-white mt-5 text-[28px]">DIGILIB STIFAR RIAU</h3>
-                <p class="text-white tracking-widest">-- Penalty Receipt --</p>
-            </div>
-            <div class="content p-5">
 
-                <h1 class="font-bold text-lg">Rp. {{ $data['ammount'] }}</h1>
-
-                <h3 class="italic text-gray-400 text-xs">{{ $data['tgl_pembayaran'] }}</h3>
-
-                <p class="text-medium mt-5 text-justify">
-                    Pembayaran denda atas keterlambatan pengembalian buku <b>Berhasil</b>. Silahkan simpan email ini sebagai
-                    bukti struk yang sah. Berikut kami tampilkan list buku yang terhitung denda :
-                </p>
-
-                <table class="border w-full border-black mt-5">
-                    <thead>
-                        <tr class="font-bold">
-                            <td width="10px" class="border border-black px-2">No</td>
-                            <td class="px-2 border border-black">Items</td>
-                            <td width="30px" class="px-2 border border-black">Qty</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $no = 1;
-                        @endphp
-                        @foreach ($data['arrBuku'] as $item)
-                            <tr>
-                                <td width="10px" class="border border-black px-2">{{ $no++ }}</td>
-                                <td class="px-2 border border-black">{{ $item['judul_buku'] }}</td>
-                                <td width="30px" class="px-2 border border-black">X1</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;"> <!-- HIDDEN PREHEADER TEXT -->
+    <div
+        style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+        We're thrilled to have you here! Get ready to dive into your new account. </div>
+    <table border="0" cellpadding="0" cellspacing="0" width="100%"> <!-- LOGO -->
+        <tr>
+            <td bgcolor="green" align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td align="center" valign="top" style="padding: 40px 10px 40px 10px;"> </td>
+                    </tr>
                 </table>
-
-                <p class="mt-5 text-justify italic text-xs">
-                    Apabila ada kesalahan pada email ini, silahkan hubungi IT Helpdesk STIFAR Riau.
-                </p>
-            </div>
-        </div>
-    </div>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="green" align="center" style="padding: 0px 10px 0px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td bgcolor="#ffffff" align="center" valign="top"
+                            style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; line-height: 48px;">
+                            <h1 style="font-size: 32px; font-weight: 400; margin: 2;">Penalty Receipt</h1> 
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td bgcolor="#ffffff" align="left"
+                            style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">Terimakasih telah melakukan pembayaran denda atas keterlambatan buku kamu. Kamu melakukan pembayaran sebesar <b>Rp {{ $data['ammount'] }}</b> pada <b>{{ $data['tgl_pembayaran'] }}</b></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" align="left">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
+                                        <table border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td align="center" style="border-radius: 20px;" bgcolor="#FFFFFF">
+                                                    Pembayaran denda ini menyangkut buku berikut :
+                                                    <ul>
+                                                        @foreach ($data['arrBuku'] as $item)
+                                                            <li>
+                                                                {{ $item['judul_buku'] }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" align="left"
+                            style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">Email ini di generate secara otomatis. Mohon untuuk <b>tidak</b> membalas email ini</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" align="left"
+                            style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">Hormat Kami,<br>IT STIFAR RIAU</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td bgcolor="#f4f4f4" align="left"
+                            style="padding: 0px 0px 20px 0px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;">
+                            <br>
+                            <p style="margin: 0;">Apakah email ini menggangu ? <a href="#"
+                                    target="_blank" style="color: #111111; font-weight: 700;">unsubscribe</a>.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
+
 </html>

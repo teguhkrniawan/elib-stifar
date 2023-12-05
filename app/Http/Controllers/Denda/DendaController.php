@@ -145,18 +145,18 @@ class DendaController extends Controller
             DB::table('tbl_peminjaman')
                 ->where('id', $idPeminjaman)
                 ->update([
-                    'status _peminjaman' => 'LUNAS'
+                    'status_peminjaman' => 'LUNAS'
                 ]);
 
             // send email
             try {
 
-                $ammount = $request->gross_amount ? $request->gross_amount : 0;
+                $ammount = $request->gross_amount ? number_format($request->gross_amount, 0, ',', '.') : 0;
                 $tgl_pembayaran = $request->transaction_time ? $request->transaction_time : date('d M Y H:i');
 
                 // get info detail peminjaman
                 $arrBuku_P = [];
-                $list_buku_dipinjam = DetailPeminjaman::where('id_peminjaman', $idPeminjaman)->get();
+                $list_buku_dipinjam = DetailPeminjaman::where('id_peminjaman', 32)->get();
                 foreach ($list_buku_dipinjam as $key => $item_detail) {
                     $buku = Buku::where('id', $item_detail->id_buku)->first();
                     array_push($arrBuku_P, [
@@ -170,8 +170,11 @@ class DendaController extends Controller
                     'tgl_pembayaran' => $tgl_pembayaran,
                     'arrBuku'  => $arrBuku_P
                 ];
-                Mail::to('fikri@pcr.ac.id')->send(new DendaMail($data));
+                Mail::to('teguhkurniawan01@outlook.com')->send(new DendaMail($data));
+
+                echo 'Success';
             } catch (\Throwable $th) {
+                dd($th->getMessage());
                 echo 'Failed Send email';
                 return;
             }
@@ -185,7 +188,37 @@ class DendaController extends Controller
     }
 
     // fungsi untuk melakukan pengiriman email
-    public function sendMail(Request $request)
-    {
-    }
+    // public function sendMail(Request $request)
+    // {
+    //     // send email
+    //     try {
+
+    //         $ammount = $request->gross_amount ? $request->gross_amount : 0;
+    //         $tgl_pembayaran = $request->transaction_time ? $request->transaction_time : date('d M Y H:i');
+
+    //         // get info detail peminjaman
+    //         $arrBuku_P = [];
+    //         $list_buku_dipinjam = DetailPeminjaman::where('id_peminjaman', 32)->get();
+    //         foreach ($list_buku_dipinjam as $key => $item_detail) {
+    //             $buku = Buku::where('id', $item_detail->id_buku)->first();
+    //             array_push($arrBuku_P, [
+    //                 'judul_buku' => $buku->judul_buku,
+    //                 'jumlah' => $item_detail->jumlah
+    //             ]);
+    //         }
+
+    //         $data = [
+    //             'ammount' => $ammount,
+    //             'tgl_pembayaran' => $tgl_pembayaran,
+    //             'arrBuku'  => $arrBuku_P
+    //         ];
+    //         Mail::to('teguhkurniawan01@outlook.com')->send(new DendaMail($data));
+
+    //         echo 'Success';
+    //     } catch (\Throwable $th) {
+    //         dd($th->getMessage());
+    //         echo 'Failed Send email';
+    //         return;
+    //     }
+    // }
 }
