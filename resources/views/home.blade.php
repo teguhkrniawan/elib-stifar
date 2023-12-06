@@ -20,10 +20,12 @@
                     </div>
                 </a>
 
-                <div class="box1 p-[50px] text-center rounded bg-yellow-500 border border-gray-200 border-2 cursor-pointer">
-                    <i class="fa-solid fa-clock text-[30px] text-white pb-3"></i>
-                    <p class="text-white font-bold">PENGEMBALIAN <br> BUKU</p>
-                </div>
+                <a href="{{ url('/pengembalian') }}">
+                    <div class="box1 p-[50px] text-center rounded bg-yellow-500 border border-gray-200 border-2 cursor-pointer">
+                        <i class="fa-solid fa-clock text-[30px] text-white pb-3"></i>
+                        <p class="text-white font-bold">PENGEMBALIAN <br> BUKU</p>
+                    </div>
+                </a>
 
                 <a href="{{ url('/denda') }}">
                     <div

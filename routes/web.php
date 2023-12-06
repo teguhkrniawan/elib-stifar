@@ -5,6 +5,7 @@ use App\Http\Controllers\Denda\DendaController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Mahasiswa\MahasiswaController;
 use App\Http\Controllers\Peminjaman\PeminjamanController;
+use App\Http\Controllers\Pengembalian\PengembalianController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,3 +41,11 @@ Route::get('/denda/cetak', [DendaController::class, 'cetak']);
 
 // email
 Route::get('/mail-test', [DendaController::class, 'sendMail']);
+
+// pengembalian 
+Route::get('/pengembalian', [PengembalianController::class, 'index']);
+Route::post('/pengembalian/cek', [PengembalianController::class, 'cekPeminjaman']);
+Route::get('/pengembalian/keranjang', [PengembalianController::class, 'indexKeranjang']);
+Route::get('/pengembalian/cekbuku', [PengembalianController::class, 'cekbuku']);
+Route::post('/pengembalian/insert', [PengembalianController::class, 'insert']);
+Route::get('/pengembalian/cetak', [PengembalianController::class, 'cetak']);
