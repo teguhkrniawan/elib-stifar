@@ -51,5 +51,17 @@ class Mahasiswa extends Model
 
         return $response;
     }
+
+    public static function cekStatusPengembalian($nim){
+        $response = [];
+
+        $query = "SELECT id, status_peminjaman FROM tbl_peminjaman a WHERE a.nim = '$nim' AND status_peminjaman = 'PINJAM'  ORDER BY id DESC LIMIT 1";
+        $data  = DB::select($query);
+        if(COUNT($data) > 0){
+            $response = $data;
+        }
+
+        return $response;
+    }
     
 }
